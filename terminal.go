@@ -42,10 +42,15 @@ type terminal struct {
 	// command state
 	lastExitCode int
 	history      *history
+
+	out, outErr io.Writer
 }
 
-func newTerminal() *terminal {
-	term := &terminal{}
+func newTerminal(out, outErr io.Writer) *terminal {
+	term := &terminal{
+		out:    out,
+		outErr: outErr,
+	}
 	history, err := newHistory()
 	if err != nil {
 		term.ErrPrint(color.RedString(err.Error()) + "\n")
@@ -55,11 +60,11 @@ func newTerminal() *terminal {
 }
 
 func (t *terminal) Stdout() io.Writer {
-	return os.Stdout
+	return t.out
 }
 
 func (t *terminal) Stderr() io.Writer {
-	return os.Stderr
+	return t.outErr
 }
 
 func (t *terminal) Note() io.Writer {

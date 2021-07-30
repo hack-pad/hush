@@ -1,31 +1,30 @@
 package hush
 
 import (
-	"bytes"
 	"io"
-	"os"
 )
 
 type carriageReturnWriter struct {
 	io.Writer
 }
 
-func newCarriageReturnWriter(dest io.Writer) (*os.File, error) {
-	r, w, err := os.Pipe()
-	if err != nil {
-		return nil, err
-	}
-	dest = &carriageReturnWriter{dest}
-
-	go func() {
-		_, _ = io.CopyBuffer(dest, r, make([]byte, 1))
-	}()
-	return w, nil
+func newCarriageReturnWriter(dest io.Writer) (io.Writer, error) {
+	return &carriageReturnWriter{dest}, nil
 }
 
-func (c *carriageReturnWriter) Write(p []byte) (n int, err error) {
-	newP := bytes.ReplaceAll(p, []byte("\n"), []byte("\n\r"))
-	n, err = c.Writer.Write(newP)
-	n -= len(newP) - len(p)
+func (c *carriageReturnWriter) Write(buf []byte) (n int, err error) {
+	for _, b := range buf {
+		_, err = c.Writer.Write([]byte{b})
+		if err != nil {
+			return
+		}
+		if b == '\n' {
+			_, err = c.Writer.Write([]byte{'\r'})
+			if err != nil {
+				return
+			}
+		}
+		n++
+	}
 	return
 }
