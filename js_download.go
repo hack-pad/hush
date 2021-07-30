@@ -4,23 +4,22 @@ package hush
 
 import (
 	"syscall/js"
-
-	"github.com/hack-pad/hackpadfs/indexeddb/idbblob"
-	"github.com/hack-pad/hackpadfs/keyvalue/blob"
 )
 
 var (
-	jsBlob     = js.Global().Get("Blob")
-	jsDocument = js.Global().Get("document")
-	jsURL      = js.Global().Get("URL")
+	jsBlob       = js.Global().Get("Blob")
+	jsDocument   = js.Global().Get("document")
+	jsURL        = js.Global().Get("URL")
+	jsUint8Array = js.Global().Get("Uint8Array")
 )
 
 func startDownload(contentType, fileName string, buf []byte) {
 	if contentType == "" {
 		contentType = "application/octet-stream"
 	}
-	b := idbblob.FromBlob(blob.NewBytes(buf))
-	blobInstance := jsBlob.New([]interface{}{b}, map[string]interface{}{
+	jsBuf := jsUint8Array.New(len(buf))
+	js.CopyBytesToJS(jsBuf, buf)
+	blobInstance := jsBlob.New([]interface{}{jsBuf}, map[string]interface{}{
 		"type": contentType,
 	})
 	link := jsDocument.Call("createElement", "a")

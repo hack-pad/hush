@@ -5,9 +5,6 @@ github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/fatih/color v1.12.0 h1:mRhaKNwANqRgUBGKmnI5ZxEk7QXmjQeCcuYFMX2bfcc=
 github.com/fatih/color v1.12.0/go.mod h1:ELkj/draVOlAH/xkhN6mQ50Qd0MPOk5AAr3maGEBuJM=
 github.com/google/renameio v1.0.1-0.20210406141108-81588dbe0453/go.mod h1:t/HQoYBZSsWSNK35C6CO/TpPLDVWvxOHboWUAweKUpk=
-github.com/hack-pad/go-indexeddb v0.1.0/go.mod h1:NH8CaojufPNcKYDhy5JkjfyBXE/72oJPeiywlabN/lM=
-github.com/hack-pad/hackpadfs v0.1.0 h1:3bItjrgASvPwOU9WZEzcA8pHJRy7FK8Dk6NaQN89SM4=
-github.com/hack-pad/hackpadfs v0.1.0/go.mod h1:8bsINHOQhQUioUUiCzCyZZNLfEXjs0RwBIf3lTG+CEg=
 github.com/johnstarich/go/datasize v0.0.1 h1:Hjswen8gwmO7trXtQ8Xl8NUOQAKKm1wvus3/xK5eHGY=
 github.com/johnstarich/go/datasize v0.0.1/go.mod h1:4eHLMGz7Q5uCmZeS9rZdahvAih1QmBg1EW3bBXTJpi4=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
