@@ -19,10 +19,18 @@ lint: lint-deps go
 	golangci-lint run
 	GOOS=js GOARCH=wasm golangci-lint run --build-tags js,wasm
 
+.PHONY: test-deps
+test-deps:
+	@go install github.com/mattn/goveralls@v0.0.9
+
 .PHONY: test
-test: go
-	go test -race -cover ./...
+test: test-deps go
+	go test -race -coverprofile=cover.out ./...
 	GOOS=js GOARCH=wasm go test -cover ./...
+	@if [[ "$$CI" == true ]]; then \
+		set -ex; \
+		goveralls -coverprofile=cover.out -service=github; \
+	fi
 
 cache:
 	mkdir -p cache
